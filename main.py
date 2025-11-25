@@ -17,7 +17,8 @@ class Jogos:
 class ParImpar:
   impar = False
   par   = True
-  
+
+
 def esperaDramatica():
   time.sleep(1)
   for i in range(3):
@@ -44,6 +45,7 @@ def parImpar(numero1, numero2, opcao):
   if total == op:
     return print("Meus parabéns, você ganhou")
   return print("Infelizmente você perdeu")
+
 
 def AdeliaGame():
       global jogo
@@ -146,12 +148,12 @@ def DouglasGame():
         case ModoDeJogo.multiplayer:
           player1 = input("Digite o nome do player 1: ")
           player2 = input("Digite o nome do player 2: ")
-          sorteado = random.choice([player1,player2])
+          sorteado = random.choice([player1, player2])
 
-          print("Quem escolherá para ser ímpar ou par será o ",sorteado)
-          imparparpl1=input("você quer impar ou par?" )
+          print("Quem escolherá para ser ímpar ou par será o ", sorteado)
+          imparparpl1=input("você quer ímpar ou par?" )
 
-          if imparparpl1=="par" and sorteado==player1 or imparparpl1=="pair" and sorteado==player1 or imparparpl1=="Par" and sorteado==player1 or imparparpl1=="Pair" and sorteado==player1:
+          if (imparparpl1=="par" or imparparpl1=="pair" or imparparpl1=="Par" or imparparpl1=="Pair") and sorteado == player1:
             print(player1,"é par e o(a)",player2,"é impar")
             print("primeiro o(a)",player1)
             Numeropl1=int(input("Qual é o seu numero"))
@@ -187,7 +189,7 @@ def DouglasGame():
             else:
               print("você digitou alguma coisa errada o jogo vai voltar desde o inicio, Boa sorte")
 
-          elif imparparpl1=="impar" and sorteado==player1 or imparparpl1=="odd" and sorteado==player1 or imparparpl1=="Impar" and sorteado==player1 or imparparpl1=="Odd" and sorteado==player1:
+          elif (imparparpl1=="impar" or imparparpl1=="odd" or imparparpl1=="Impar" or imparparpl1=="Odd") and sorteado==player1:
             print(player1,"é impar e o(a)",player2,"é par")
             print("primeiro o(a)",player1)
             Numeropl1=int(input("Qual é o seu numero"))
@@ -288,19 +290,7 @@ def DouglasGame():
               print("você digitou alguma coisa errada o jogo vai voltar desde o inicio, Boa sorte")   
 
 def RodrigoGame():
-  jojo=input("Opa, este jogo sera um jogo de verdadeiro ou falso você quer jogar? se não digite fim para terminar o jogo")
-  if jojo=="fim" or jojo == "Fim" or jojo =="end" or jojo=="End":
-      finalR = True
-      print("neste progama contem varios tipos de jogos diferentes qual você quer jogar")         
-      print("1- Pedra,Papel,Tesoura/Jokenpo")
-      print("2- Impar ou Par")
-      print("3- Acerte o Numero")
-      print("4- Verdade ou falso/True and false")
-      print("5- Cara ou corôa")
-      print("6- Super Trunfo")
-      jogo=input("Qual jogo você quer?(digite o numero)")
-
-  else:
+  while True:
     def criaLista(tamanho):
         if tamanho > 2:
             n = random.randint(0, (tamanho - 1))
@@ -373,19 +363,7 @@ def RodrigoGame():
     #tentativas -> qtd de tentativas
     #ganhou -> controle de ganhar ou perder o jogo
     #resp -> controle de loop do jogo
-    
-    jojo=input("Opa, este jogo sera um jogo de verdadeiro ou falso você quer jogar? se não digite fim para terminar o jogo")
-    if jojo=="fim" or jojo == "Fim" or jojo =="end" or jojo=="End":
-      finalR = True
-      print("neste progama contem varios tipos de jogos diferentes qual você quer jogar")         
-      print("1- Pedra,Papel,Tesoura/Jokenpo")
-      print("2- Impar ou Par")
-      print("3- Acerte o Numero")
-      print("4- Verdade ou falso/True and false")
-      print("5- Cara ou corôa")
-      print("6- Super Trunfo")
-      jogo=input("Qual jogo você quer?(digite o numero)")
-
+  
 def CarlosGame():
     global jogo
     print("Nome do Jogo: Set the Number")
@@ -530,7 +508,7 @@ def SabrinaGame():
           print("5- Cara ou corôa")
           jogo=input("Qual jogo você quer?(digite o numero)")
 
-def supertrunfo():
+def superTrunfo():
   global jogo
   print("Vamos jogar um jogo chamado super Trunfo ")
   pergunta=input("Você quer jogar?ou digite 'fim' para terminar o jogo ")
@@ -688,12 +666,15 @@ def supertrunfo():
         print("6- Super Trunfo")
         jogo=input("Qual jogo você quer?(digite o numero)") 
 
+
+
+
 while True:
   time.sleep(0.3)
   print("Neste programa contem varios tipos de jogos diferentes qual você quer jogar")
-  print("1 - Pedra,Papel,Tesoura/Jokenpo")
+  print("1 - Pedra, Papel, Tesoura/Jokenpo")
   print("2 - Ímpar ou Par")
-  print("3 - Acerte o Numero")
+  print("3 - Acerte o Número")
   print("4 - Verdade ou falso/True and false")
   print("5 - Cara ou corôa")
   print("6 - Super Trunfo")
@@ -710,6 +691,6 @@ while True:
     case Jogos.caraCoroa:
       SabrinaGame()
     case Jogos.superTrunfo:
-      supertrunfo()
+      superTrunfo()
     case _:
       print("Digitaste algo errado")
