@@ -1,6 +1,7 @@
 import time
-from random import randint
 import random
+from random import randint
+from pwinput import pwinput
 
 class ModoDeJogo:
   cpu = '1'
@@ -18,10 +19,9 @@ class ParImpar:
   impar = False
   par   = True
 
-
-def esperaDramatica():
+def esperaDramatica(tempo = 1):
   time.sleep(1)
-  for i in range(3):
+  for i in range(tempo):
     print('.')
     time.sleep(1)
 
@@ -37,15 +37,15 @@ def sair(numero):
     return True
    return False
 
-def parImpar(numero1, numero2, opcao):
-  n1 = int(numero1) % 2
-  n2 = int(numero2) % 2
+def parImpar(numero1, numero2, opcao, nomeJogador1=None, nomeJogador2=None):
   op = int(opcao) % 2
-  total = (n1 + n2) % 2
+  total = (numero1 + numero2) % 2
+  if nomeJogador1 and nomeJogador2:
+    jogadorVencedor = nomeJogador1 if op == total else nomeJogador2
+    return print(f"Meus parabéns! {jogadorVencedor} ganhou")
   if total == op:
-    return print("Meus parabéns, você ganhou")
+    return print(f"Meus parabéns! Você ganhou")
   return print("Infelizmente você perdeu")
-
 
 def AdeliaGame():
       global jogo
@@ -117,177 +117,66 @@ def AdeliaGame():
           else:
             print("Você digitou errado, reiniciando...")
 
-def DouglasGame():
+def ImparOuParGame():
   print("Vamos jogar um jogo de ímpar ou par!")
   while True:
 
-    modo = input("Você quer jogar contra a '1 - CPU' ou '2 - Multiplayer' ? Dígite o número: ")
+    modo = input("Você quer jogar contra a '1 - CPU' ou '2 - Multiplayer' ? Digite o número: ")
 
     if sair(modo): break
     if tratativaUmDois(modo): continue 
 
-    while True:
-      time.sleep(0.5)
-      match modo:
-        case ModoDeJogo.cpu:
-
-          imparPar = input("Você quer '1 - Ímpar' ou '2 - Par' ? Dígite o número da escolha: ")
+    time.sleep(0.5)
+    match modo:
+      case ModoDeJogo.cpu:
+        while True:
+          imparPar = input("Você quer '1 - Ímpar' ou '2 - Par' ? Digite o número da escolha: ")
           if sair(imparPar): break
           if tratativaUmDois(imparPar): continue    
 
           time.sleep(0.2)
 
-          num1 = int(input("Dígite o número para o jogo: "))
+          try:
+            num1 = int(input("Digite o número para o jogo: "))
+          except ValueError:
+            print("Valor inválido, recomeçando...")
+            break
+
           num2 = random.randint(0,99)
 
-          esperaDramatica()
+          esperaDramatica(3)
 
-          print(f'{num1} + (Seu número) + {num2} (Número do computador) = {num1 + num2}')
+          print(f'{num1} (Seu número) + {num2} (Número do computador) = {num1 + num2}')
           parImpar(num1, num2, imparPar)
 
-        case ModoDeJogo.multiplayer:
-          player1 = input("Digite o nome do player 1: ")
-          player2 = input("Digite o nome do player 2: ")
-          sorteado = random.choice([player1, player2])
+      case ModoDeJogo.multiplayer:
+        while True:
+          nomeJogador1 = input("Jogador 1, digite o seu nome: ")
+          if sair(nomeJogador1): break
+          nomeJogador2 = input("Jogador 2, digite o seu nome: ")
+          if sair(nomeJogador2): break
 
-          print("Quem escolherá para ser ímpar ou par será o ", sorteado)
-          imparparpl1=input("você quer ímpar ou par?" )
+          jogadorEscolhido = random.choice([nomeJogador1, nomeJogador2])
+          print(f'O jogador sorteado para escolher é: {jogadorEscolhido}')
 
-          if (imparparpl1=="par" or imparparpl1=="pair" or imparparpl1=="Par" or imparparpl1=="Pair") and sorteado == player1:
-            print(player1,"é par e o(a)",player2,"é impar")
-            print("primeiro o(a)",player1)
-            Numeropl1=int(input("Qual é o seu numero"))
-            print("")
-            print("")
-            print("")
-            print("Agora é a vez do",player2)
-            Numeropl2=int(input("Qual é o seu numero"))
-            print("")
-            print("")
-            partida=Numeropl1+Numeropl2
-            resultadopar= partida%2
-            print(Numeropl1)
-            print("")
-            print("+")
-            print("")
-            print(Numeropl2)
-            print("")
-            print("=")
-            print("")
-            print(partida)
-            
-            if resultadopar==0:
-              print("O vencedor é o(a)",player1)
-              print("")
-              print("Que pena",player2,"na proxima você ganha")
-            
-            elif resultadopar==1:
-              print("O vencendo é o(a)",player2)
-              print("")
-              print("Que pena",player1,"na proxima você ganha")
-            
-            else:
-              print("você digitou alguma coisa errada o jogo vai voltar desde o inicio, Boa sorte")
+          imparPar = input(f"{jogadorEscolhido}, você quer '1 - Ímpar' ou '2 - Par' ? Digite o número da escolha: ")
+          if sair(imparPar): break
+          if tratativaUmDois(imparPar): continue    
 
-          elif (imparparpl1=="impar" or imparparpl1=="odd" or imparparpl1=="Impar" or imparparpl1=="Odd") and sorteado==player1:
-            print(player1,"é impar e o(a)",player2,"é par")
-            print("primeiro o(a)",player1)
-            Numeropl1=int(input("Qual é o seu numero"))
-            print("")
-            print("")
-            print("")
-            print("agora é a sua vez",player2)
-            Numeropl2=int(input("Qual é o seu numero"))
-            print("")
-            print("")
-            partida=Numeropl1+Numeropl2
-            resultadopar= partida%2
-            print(Numeropl1)
-            print("")
-            print("+")
-            print("")
-            print(Numeropl2)
-            print("")
-            print("=")
-            print("")
-            print(partida)
-            
-            if resultadopar==0:
-              print("O vencedor é o(a)",player2)
-              print("")
-              print("Que pena",player1,"na proxima você ganha")
-            
-            elif resultadopar==1:
-              print("O vencendo é o(a)",player1)
-              print("")
-              print("Que pena",player2,"na proxima você ganha")
+          time.sleep(0.2)
 
-            else:
-              print("você digitou alguma coisa errada o jogo vai voltar desde o inicio, Boa sorte")
-          
-          elif imparparpl1=="par" and sorteado==player2 or imparparpl1=="pair" and sorteado==player2 or imparparpl1=="Par" and sorteado==player2 or imparparpl1=="Pair" and sorteado==player2:
-            print(player2,"é par e o(a)",player1,"é impar")
-            print("primeiro o(a)",player2)
-            Numeropl1=int(input("Qual é o seu numero"))
-            print("")
-            print("")
-            print("")
-            print("Agora é a vez do",player1)
-            Numeropl2=int(input("Qual é o seu numero"))
-            print("")
-            print("")
-            partida=Numeropl1+Numeropl2
-            resultadopar= partida%2
-            print(Numeropl1)
-            print("")
-            print("+")
-            print("")
-            print(Numeropl2)
-            print("")
-            print("=")
-            print("")
-            print(partida)
-            
-            if resultadopar==0:
-              print("O vencedor é o(a)",player2)
-              print("")
-              print("Que pena",player1,"na proxima você ganha")
-            
-            elif resultadopar==1:
-              print("O vencendo é o(a)",player1)
-              print("")
-              print("Que pena",player2,"na proxima você ganha")
-            
-            else:
-              print("você digitou alguma coisa errada o jogo vai voltar desde o inicio, Boa sorte")
+          try:
+            num1 = int(pwinput(prompt=f"{nomeJogador1}, Digite o número para o jogo: ", mask="*"))
+            num2 = int(pwinput(prompt=f"{nomeJogador2}, Digite o número para o jogo: ", mask="*"))
+          except ValueError:
+            print("Valor inválido, recomeçando...")
+            break
 
-          elif imparparpl1=="impar" and sorteado==player2 or imparparpl1=="odd" and sorteado==player2 or imparparpl1=="Impar" and sorteado==player2 or imparparpl1=="Odd" and sorteado==player2:
-            print(player2,"é impar e o(a)",player1,"é par")
-            print("primeiro o(a)",player2)
-            Numeropl1=int(input("Qual é o seu numero"))
-            print("")
-            print("")
-            print("")
-            print("agora é a sua vez",player1)
-            Numeropl2=int(input("Qual é o seu numero"))
-            print("")
-            print("")
-            partida=Numeropl1+Numeropl2
-            resultadopar= partida%2
-            print(f'{Numeropl1} + (Número do player 1) + {Numeropl2} (Número do player 2) = {partida}')
-            
-            if resultadopar==0:
-              print("O vencedor é o(a)",player1)
-              print("")
-              print("Que pena",player2,"na proxima você ganha")
-            
-            elif resultadopar==1:
-              print("O vencendo é o(a)",player2)
-              print("")
-              print("Que pena",player1,"na proxima você ganha")            
+          esperaDramatica(3)
 
-            else:
-              print("você digitou alguma coisa errada o jogo vai voltar desde o inicio, Boa sorte")   
+          print(f'{num1} ({nomeJogador1}) + {num2} ({nomeJogador2}) = {num1 + num2}')
+          if jogadorEscolhido == nomeJogador1: parImpar(num1, num2, imparPar, nomeJogador1, nomeJogador2)
+          else:                                parImpar(num1, num2, imparPar, nomeJogador2, nomeJogador1)
 
 def RodrigoGame():
   while True:
@@ -666,9 +555,6 @@ def superTrunfo():
         print("6- Super Trunfo")
         jogo=input("Qual jogo você quer?(digite o numero)") 
 
-
-
-
 while True:
   time.sleep(0.3)
   print("Neste programa contem varios tipos de jogos diferentes qual você quer jogar")
@@ -683,7 +569,7 @@ while True:
     case Jogos.jokenpo:
       AdeliaGame()
     case Jogos.imparPar:
-      DouglasGame()
+      ImparOuParGame()
     case Jogos.acerteNumero:
       CarlosGame()
     case Jogos.verdadeiroFalso:           #BEM PROVAVEL Q VC(PROFESSORA) ESTÁ LENDO ISSO NA HORA DA APRESENTAÇÃO, E DEVE ESTAR DANDO UMA BRONCA TIPO "AH PQ O JOGO DO RODRIGO NÃO ESTÁ EM FUNÇÃO, AÍ EU TE RESPONDO ,MEIO Q O DOUGLAS DO PASSADO Q ESTÁ ESCREVENDO ISSO AGR AS 2 DA MANHA(COF COF BEM RENPONSAVEL) ESTÁ PESQUISANDO UMA FORMA DE COLOCAR UMA FUNÇÃO EM OUTRA E MEIO NÃO CONSEGUI :/, POR ISSO Q EU FIZ ESTÁ GAMBIARRA FOI MAL E NÃO TIRA PONTO DO GRUPO PLEASE, ESSA FOI A UNICA MANEIRA DE FAZER O PROGAMA LER, SE TEVE ALGUM ERRO DE PORTUGUES FOI MAL EU TO DESDE DAS 9 FAZENDO ISSO E AINDA FALTA MUITA COISA :( ASS:DOUGLAS (KAKAKAKAKAK DOUGLAS DO PRESENTE E FUTURO DESTE DOUGLAS 03/04/2020 ESTA RINDO MUITO DE SI MESMO DO PASSADO KAKAKKAKAKA)
